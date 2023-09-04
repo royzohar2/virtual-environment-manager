@@ -1,15 +1,16 @@
 import tkinter as tk
 import os
 from EnvironmentDetails import EnvironmentDetails
+from NewEnvironment import NewEnvironment
 class VirtualEnvManagerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Virtual Environment Manager")
         # Set the default window size
-        self.root.geometry("600x700")
+        self.root.geometry("650x700")
 
         self.main_frame = tk.Frame(root)
-        self.main_frame.grid(row=0, column=0, columnspan=3)  # Ensure the frame is properly gridded
+        self.main_frame.grid(columnspan=3)  # Ensure the frame is properly gridded
 
         # Get the full path to your desktop folder
         desktop_path = os.path.expanduser("~/Desktop")
@@ -20,7 +21,7 @@ class VirtualEnvManagerApp:
             os.makedirs(self.env_folder)  # Create the folder if it doesn't exist
         self.show_env_list()
         self.environment_details = EnvironmentDetails( self)
-
+        self.new_env = NewEnvironment(self)
 
     def clear_main_frame(self):
         for widget in self.main_frame.winfo_children():
@@ -60,7 +61,7 @@ class VirtualEnvManagerApp:
 
     def add_env(self):
         self.clear_main_frame()
-
+        self.new_env.new_env()
         pass
         # Implement the logic to add a new environment here
         # You can create a new virtual environment using the `venv` module or any other method
