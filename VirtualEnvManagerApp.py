@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 import os
 from EnvironmentDetails import EnvironmentDetails
 from NewEnvironment import NewEnvironment
@@ -8,10 +9,50 @@ class VirtualEnvManagerApp:
         self.root = root
         self.root.title("Virtual Environment Manager")
         # Set the default window size
-        self.root.geometry("600x700")
+        self.root.geometry("650x700")
+        # Create A Main frame
 
-        self.main_frame = tk.Frame(root)
-        self.main_frame.grid(columnspan=3)  # Ensure the frame is properly gridded
+        main_frame = ttk.Frame(root)
+
+        main_frame.pack(fill=tk.BOTH,expand=1)
+
+        # Create Frame for X Scrollbar
+
+        sec = ttk.Frame(main_frame)
+
+        sec.pack(fill=tk.X,side=tk.BOTTOM)
+
+        my_canvas = tk.Canvas(main_frame)
+
+        my_canvas.pack(side=tk.LEFT,fill=tk.BOTH,expand=1)
+
+        # Add A Scrollbars to Canvas
+
+        x_scrollbar = ttk.Scrollbar(sec,orient=tk.HORIZONTAL,command=my_canvas.xview)
+
+        x_scrollbar.pack(side=tk.BOTTOM,fill=tk.X)
+
+        y_scrollbar = ttk.Scrollbar(main_frame,orient=tk.VERTICAL,command=my_canvas.yview)
+        y_scrollbar.pack(side=tk.RIGHT,fill=tk.Y)
+
+        # Configure the canvas
+
+        my_canvas.configure(xscrollcommand=x_scrollbar.set)
+
+        my_canvas.configure(yscrollcommand=y_scrollbar.set)
+
+        my_canvas.bind("<Configure>",lambda e: my_canvas.config(scrollregion= my_canvas.bbox(tk.ALL))) 
+
+        # Create Another Frame INSIDE the Canvas
+
+        self.main_frame = tk.Frame(my_canvas)
+        # Add that New Frame a Window In The Canvas
+
+        my_canvas.create_window((0,0),window= self.main_frame, anchor="nw")
+
+        self.custom_style = ttk.Style()
+        self.custom_style.configure("Custom.TButton", background="red")
+
 
         # Get the full path to your desktop folder
         desktop_path = os.path.expanduser("~/Desktop")
@@ -23,6 +64,7 @@ class VirtualEnvManagerApp:
         self.show_env_list()
         self.environment_details = EnvironmentDetails( self)
         self.new_env = NewEnvironment(self)
+   
 
     def clear_main_frame(self):
         for widget in self.main_frame.winfo_children():
@@ -44,13 +86,13 @@ class VirtualEnvManagerApp:
             row_num = i // 3 + 1
             col_num = i % 3
             button = tk.Button(self.main_frame, text=env_name, command=lambda name=env_name: self.open_env(name), 
-                               width=20, height=2, bg="lightblue", relief=tk.RAISED, font=("Helvetica", 12))
+                               width=20, height=2, bg="blue", relief=tk.RAISED, font=("Helvetica", 12))
             button.grid(row=row_num, column=col_num, padx=10, pady=5)
 
 
         # Button to add a new environment
         add_button = tk.Button(self.main_frame, text="Add New Environment", command=self.add_env,
-                               width=20, height=2, bg="lightgreen", relief=tk.RAISED, font=("Helvetica", 12))
+                               width=20, height=2, bg="blue", relief=tk.RAISED, font=("Helvetica", 12))
         add_button.grid(row=row_num +1, column=1, padx=10, pady=5)
 
     def open_env(self, env_name):
