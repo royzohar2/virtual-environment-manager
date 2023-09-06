@@ -3,7 +3,7 @@ import tkinter as tk
 import os
 import subprocess
 import tempfile
-
+from tkinter import messagebox
 
 
 class EnvironmentDetails:
@@ -81,7 +81,7 @@ class EnvironmentDetails:
 
             return packages
         except subprocess.CalledProcessError:
-            print("Error parsing")
+            messagebox.showerror("Error", "Error parsing")
             return []
 
 
@@ -102,7 +102,8 @@ class EnvironmentDetails:
             self.main.show_env_list()
 
         except subprocess.CalledProcessError as e:
-            print(f"Error deleting environment '{env_name}': {e}")
+            messagebox.showerror("Error", f"Error deleting environment '{env_name}': {e}")
+
 
     
     def open_terminal(self, env_name):
@@ -122,7 +123,7 @@ class EnvironmentDetails:
             subprocess.run(['osascript', '-e', applescript])
 
         except Exception as e:
-            print(f"Error opening terminal: {e}")
+            messagebox.showerror("Error", f"Error opening terminal: {e}")
       
 
    

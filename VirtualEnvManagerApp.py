@@ -2,12 +2,13 @@ import tkinter as tk
 import os
 from EnvironmentDetails import EnvironmentDetails
 from NewEnvironment import NewEnvironment
+
 class VirtualEnvManagerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Virtual Environment Manager")
         # Set the default window size
-        self.root.geometry("650x700")
+        self.root.geometry("600x700")
 
         self.main_frame = tk.Frame(root)
         self.main_frame.grid(columnspan=3)  # Ensure the frame is properly gridded
@@ -56,17 +57,11 @@ class VirtualEnvManagerApp:
         self.clear_main_frame()
         self.environment_details.show_env_details(env_name)
 
-        # Implement the logic to open an environment here
-        # You can launch a new window or perform any actions you need
 
     def add_env(self):
         self.clear_main_frame()
         self.new_env.new_env()
-        pass
-        # Implement the logic to add a new environment here
-        # You can create a new virtual environment using the `venv` module or any other method
-
-
+        
 
 
 if __name__ == "__main__":
