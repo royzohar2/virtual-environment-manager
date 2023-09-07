@@ -86,14 +86,14 @@ class VirtualEnvManagerApp:
             row_num = i // 3 + 1
             col_num = i % 3
             button = tk.Button(self.main_frame, text=env_name, command=lambda name=env_name: self.open_env(name), 
-                               width=20, height=2, bg="blue", relief=tk.RAISED, font=("Helvetica", 12))
+                               width=20, height=2,  relief=tk.RAISED, font=("Helvetica", 12))
             button.grid(row=row_num, column=col_num, padx=10, pady=5)
 
 
         # Button to add a new environment
         add_button = tk.Button(self.main_frame, text="Add New Environment", command=self.add_env,
-                               width=20, height=2, bg="blue", relief=tk.RAISED, font=("Helvetica", 12))
-        add_button.grid(row=row_num +1, column=1, padx=10, pady=5)
+                               width=20, height=2, relief=tk.RAISED, font=("Helvetica", 12))
+        add_button.grid(row=row_num+1 , column=1, padx=10, pady=5)
 
     def open_env(self, env_name):
         self.clear_main_frame()
