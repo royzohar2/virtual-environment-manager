@@ -3,13 +3,16 @@ from tkinter import ttk
 import os
 from EnvironmentDetails import EnvironmentDetails
 from NewEnvironment import NewEnvironment
-
+import subprocess
+import sys
 class VirtualEnvManagerApp:
     def __init__(self, root):
+
+
         self.root = root
         self.root.title("Virtual Environment Manager")
         # Set the default window size
-        self.root.geometry("650x700")
+        self.root.geometry("620x700")
         # Create A Main frame
 
         main_frame = ttk.Frame(root)

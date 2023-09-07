@@ -49,6 +49,7 @@ class EnvironmentDetails:
 
     def get_installed_packages(self , env_name):
         try:
+            print(subprocess.check_output("echo $PPID", shell=True, text=True)) 
             # Create a temporary file to capture the output
             with tempfile.NamedTemporaryFile(mode='w+', delete=False) as temp_file:
                 temp_file_name = temp_file.name
@@ -63,15 +64,16 @@ class EnvironmentDetails:
             # Create an AppleScript command to open a new terminal window and run the commands
             applescript = f'''
             tell application "Terminal"
-                do script "{'; '.join(commands)}"
+                do script "{'; '.join(commands)} sleep 2 ; exit"
             end tell
             '''
 
             # Run the AppleScript command
             subprocess.run(['osascript', '-e', applescript])
-            subprocess.run("sleep 2 && killall Terminal", shell=True, check=True)
+            subprocess.run("sleep 1 && exit", shell=True, check=True)
 
-                    # Read the output from the temporary file
+
+            # Read the output from the temporary file
             with open(temp_file_name, "r") as file:
                 packages = file.readlines()
 
